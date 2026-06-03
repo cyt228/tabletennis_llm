@@ -1,0 +1,36 @@
+{
+  "video_info": {
+    "video_path": "data\\double_test1.mp4",
+    "video_name": "double_test1.mp4",
+    "fps": 30.0,
+    "frame_count": 66,
+    "width": 1920,
+    "height": 1080,
+    "duration_sec": 2.2,
+    "sampled_frame_indices": [
+      0,
+      6,
+      12,
+      18,
+      24,
+      30,
+      35,
+      41,
+      47,
+      53,
+      59,
+      65
+    ]
+  },
+  "provider": "openai_responses",
+  "model_name": "gpt-4.1-mini",
+  "prompt_path": "prompts\\action_analysis_v2.md",
+  "prediction": {
+    "video_name": "double_test1.mp4",
+    "predicted_label": 3,
+    "predicted_name_zh": "殺球",
+    "predicted_name_en": "smash",
+    "predicted_type": "攻擊"
+  },
+  "raw_response": "{\n  \"predicted_label\": 3\n}"
+}

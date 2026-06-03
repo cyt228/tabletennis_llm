@@ -1,0 +1,28 @@
+{
+  "video_info": {
+    "video_path": "double_test1.mp4",
+    "fps": 30.0,
+    "frame_count": 66,
+    "width": 1920,
+    "height": 1080,
+    "duration_sec": 2.2,
+    "sampled_frame_indices": [
+      0,
+      6,
+      12,
+      18,
+      24,
+      30,
+      35,
+      41,
+      47,
+      53,
+      59,
+      65
+    ]
+  },
+  "provider": "openai_responses",
+  "model_name": "gpt-4.1-mini",
+  "prompt_path": "prompts\\action_analysis_v1.md",
+  "raw_response": "{\n  \"match_type\": \"doubles\",\n  \"main_actor\": \"left_front player in red clothing executing a table tennis swing\",\n  \"players_analysis\": [\n    {\n      \"player_ref\": \"left_front\",\n      \"action\": \"swing\",\n      \"summary\": \"該球員正在向前揮拍準備擊球\"\n    },\n    {\n      \"player_ref\": \"left_back\",\n      \"action\": \"ready\",\n      \"summary\": \"該球員彎腰準備接發球\"\n    },\n    {\n      \"player_ref\": \"right_front\",\n      \"action\": \"ready\",\n      \"summary\": \"該球員微彎腰以防守姿態等待球來\"\n    },\n    {\n      \"player_ref\": \"right_back\",\n      \"action\": \"ready\",\n      \"summary\": \"後方球員也處於守位準備狀態\"\n    }\n  ],\n  \"clip_summary\": \"此段影片為雙打比賽，焦點在左前方紅衣球員進行擊球動作，其餘三名球員皆處於準備防守姿勢等待回球\"\n}"
+}

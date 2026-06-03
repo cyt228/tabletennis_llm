@@ -1,0 +1,36 @@
+{
+  "video_info": {
+    "video_path": "double_test2.mp4",
+    "video_name": "double_test2.mp4",
+    "fps": 30.0,
+    "frame_count": 26,
+    "width": 1920,
+    "height": 1080,
+    "duration_sec": 0.8666666666666667,
+    "sampled_frame_indices": [
+      0,
+      2,
+      5,
+      7,
+      9,
+      11,
+      14,
+      16,
+      18,
+      20,
+      23,
+      25
+    ]
+  },
+  "provider": "openai_responses",
+  "model_name": "gpt-4.1-mini",
+  "prompt_path": "prompts\\action_analysis_v1.md",
+  "prediction": {
+    "video_name": "double_test2.mp4",
+    "predicted_label": 0,
+    "predicted_name_zh": "無",
+    "predicted_name_en": "none",
+    "predicted_type": "無"
+  },
+  "raw_response": "{\n  \"match_type\": \"doubles\",\n  \"main_actor\": \"right_front player in black shirt preparing to hit the ball\",\n  \"players_analysis\": [\n    {\n      \"player_ref\": \"left_front\",\n      \"action\": \"ready\",\n      \"summary\": \"This player is slightly crouched and staying alert, waiting for the ball.\"\n    },\n    {\n      \"player_ref\": \"left_back\",\n      \"action\": \"ready\",\n      \"summary\": \"This player is in a ready stance, paying attention to the ball but not moving to hit yet.\"\n    },\n    {\n      \"player_ref\": \"right_front\",\n      \"action\": \"swing\",\n      \"summary\": \"This player is extending the arm forward to hit the ball, appearing to be the active hitter.\"\n    },\n    {\n      \"player_ref\": \"right_back\",\n      \"action\": \"ready\",\n      \"summary\": \"This player is in a ready position, focused and prepared to respond next.\"\n    }\n  ],\n  \"main_actor\": \"right_front player in black shirt is the main mover in this sequence, actively hitting the ball towards the opponents.\"\n}"
+}
