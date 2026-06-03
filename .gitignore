@@ -6,6 +6,5 @@ __pycache__/
 venv/
 env/
 .env
-/output
 *.pt
 uv_activate_way.txt

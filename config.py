@@ -38,12 +38,12 @@ class LLMConfig:
     enabled: bool = True
     provider: str = "openai_responses"
     model_name: str = "gpt-4.1-mini"
-    prompt_path: Path = Path("prompts/action_analysis_v4.md")
+    prompt_path: Path = Path("prompts/action_analysis_v5.md")
     sample_count: int | None = None
     frame_stride: int = 1
     jpeg_quality: int = 85
     save_json: bool = True
-    output_json_suffix: str = "_llm_v4.json"
+    output_json_suffix: str = "_llm_v5.json"
 
 
 @dataclass

@@ -78,7 +78,7 @@
   },
   "provider": "openai_responses",
   "model_name": "gpt-4.1-mini",
-  "prompt_path": "prompts\\action_analysis_v4.md",
+  "prompt_path": "prompts\\action_analysis_v5.md",
   "prediction": {
     "video_name": "double_test1.mp4",
     "predicted_label": 15,
@@ -86,5 +86,5 @@
     "predicted_name_en": "traditional",
     "predicted_type": "發球"
   },
-  "raw_response": "{\n  \"predicted_label\": 15\n}"
+  "raw_response": "{\"predicted_label\":15}"
 }
