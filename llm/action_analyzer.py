@@ -7,6 +7,7 @@ from typing import Any
 from llm.clip_loader import ClipInfo
 from llm.prompt_loader import load_markdown_prompt
 from llm.va_adapter import VAAdapter
+from llm.action_guide_loader import load_action_guide
 
 
 LABEL_MAP = {
@@ -38,10 +39,12 @@ class ActionAnalyzer:
         provider: str,
         model_name: str,
         prompt_path: str | Path,
+        action_guide_path: str | Path | None = None,
     ):
         self.provider = provider
         self.model_name = model_name
         self.prompt_path = Path(prompt_path)
+        self.action_guide_path = Path(action_guide_path) if action_guide_path else None
 
         self.adapter = VAAdapter(
             provider=self.provider,
@@ -49,7 +52,7 @@ class ActionAnalyzer:
         )
 
     def analyze(self, clip_info: ClipInfo) -> dict[str, Any]:
-        prompt_text = load_markdown_prompt(self.prompt_path)
+        prompt_text = self._build_prompt()
 
         raw_text = self.adapter.analyze_clip_frames(
             prompt_text=prompt_text,
@@ -75,6 +78,23 @@ class ActionAnalyzer:
             "prediction": prediction,
             "raw_response": raw_text,
         }
+    
+    def _build_prompt(self) -> str:
+        prompt_text = load_markdown_prompt(self.prompt_path)
+
+        if self.action_guide_path is None:
+            return prompt_text
+
+        action_guide = load_action_guide(self.action_guide_path)
+
+        if "{{ACTION_GUIDE}}" in prompt_text:
+            return prompt_text.replace("{{ACTION_GUIDE}}", action_guide)
+
+        return (
+            f"{prompt_text}\n\n"
+            f"Action guide:\n"
+            f"{action_guide}"
+        )
 
     def _parse_prediction(self, raw_text: str, video_name: str) -> dict[str, Any]:
         cleaned = raw_text.strip()
@@ -104,6 +124,7 @@ class ActionAnalyzer:
             "predicted_name_zh": label_info["zh"],
             "predicted_name_en": label_info["en"],
             "predicted_type": label_info["type"],
+            "action_guide_path": str(self.action_guide_path) if self.action_guide_path else None,
         }
 
  

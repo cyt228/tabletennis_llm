@@ -24,6 +24,7 @@ def main():
         provider=config.llm.provider,
         model_name=config.llm.model_name,
         prompt_path=config.llm.prompt_path,
+        action_guide_path=config.llm.action_guide_path,
     )
 
     result = analyzer.analyze(clip_info)

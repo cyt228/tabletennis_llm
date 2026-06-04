@@ -4,7 +4,7 @@ from pathlib import Path
 
 @dataclass
 class VideoConfig:
-    input_video_path: str = "data/video/double_test1.mp4"
+    input_video_path: str = "data/video/double_test2.mp4"
     output_dir: str = "outputs"
     output_video_suffix: str = "_annotated.mp4"
     output_json_suffix: str = ".json"
@@ -38,12 +38,15 @@ class LLMConfig:
     enabled: bool = True
     provider: str = "openai_responses"
     model_name: str = "gpt-4.1-mini"
-    prompt_path: Path = Path("prompts/action_analysis_v5.md")
+
+    prompt_path: Path = Path("prompts/action_analysis_v6.md")
+    action_guide_path: Path | None = Path("data/action_detail.xlsx")
+
     sample_count: int | None = None
     frame_stride: int = 1
     jpeg_quality: int = 85
     save_json: bool = True
-    output_json_suffix: str = "_llm_v5.json"
+    output_json_suffix: str = "_llm_v6.json"
 
 
 @dataclass
