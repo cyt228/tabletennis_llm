@@ -1,0 +1,51 @@
+{
+  "video_info": {
+    "video_path": "data\\video\\double_test2.mp4",
+    "video_name": "double_test2.mp4",
+    "fps": 30.0,
+    "frame_count": 26,
+    "width": 1920,
+    "height": 1080,
+    "duration_sec": 0.8666666666666667,
+    "sampled_frame_indices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25
+    ]
+  },
+  "provider": "openai_responses",
+  "model_name": "gpt-4.1-mini",
+  "prompt_path": "prompts\\action_analysis_v7.md",
+  "prediction": {
+    "video_name": "double_test2.mp4",
+    "predicted_label": 5,
+    "predicted_name_zh": "快帶",
+    "predicted_name_en": "fast drive",
+    "predicted_type": "攻擊",
+    "action_guide_path": "data\\action_detail.xlsx"
+  },
+  "raw_response": "{\n  \"predicted_label\": 5\n}"
+}
