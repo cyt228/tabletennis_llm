@@ -1,4 +1,5 @@
-/data/video
+data/
+combined/
 *.mp4
 __pycache__/
 *.pyc
@@ -8,3 +9,4 @@ env/
 .env
 *.pt
 uv_activate_way.txt
+.zip

@@ -4,11 +4,11 @@ from pathlib import Path
 
 @dataclass
 class VideoConfig:
-    input_video_path: str = "data/video/double_test2.mp4"
-    output_dir: str = "outputs"
+    input_video_path: str = r"combined\test_samples_10"
+    output_dir: str = r"combined\outputs\unified_samples_10_test"
     output_video_suffix: str = "_annotated.mp4"
     output_json_suffix: str = ".json"
-    save_video: bool = True
+    save_video: bool = False
     save_json: bool = True
     display_scale: float = 1.0
 
@@ -36,17 +36,21 @@ class FilterConfig:
 @dataclass
 class LLMConfig:
     enabled: bool = True
-    provider: str = "openai_responses"
-    model_name: str = "gpt-4.1-mini"
+    provider: str = "openrouter"
+    model_name: str = "google/gemini-2.5-flash"
 
-    prompt_path: Path = Path("prompts/action_analysis_v7.md")
-    action_guide_path: Path | None = Path("data/action_detail.xlsx")
+    prompt_path: Path = Path("prompts/unified/test.md")
+    action_guide_path: Path | None = None   #Path("data/action_detail.xlsx")
 
     sample_count: int | None = None
     frame_stride: int = 1
     jpeg_quality: int = 85
+
+    temperature: float = 0.0
+    max_tokens: int = 1000
+
     save_json: bool = True
-    output_json_suffix: str = "_llm_v7.json"
+    output_json_suffix: str = "_llm_test.json"
 
 
 @dataclass
