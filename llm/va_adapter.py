@@ -8,6 +8,8 @@ from openai import OpenAI
 
 from llm.clip_loader import SampledFrame
 
+import base64
+from pathlib import Path
 
 load_dotenv()
 
@@ -139,6 +141,118 @@ class VAAdapter:
                 "cost_usd": cost,
                 "prompt_tokens_details": prompt_details,
                 "completion_tokens_details": completion_details,
+                "raw_usage": usage_dict,
+            },
+        }
+
+    def analyze_clip_video(
+        self,
+        prompt_text: str,
+        video_path: str | Path,
+    ) -> dict[str, Any]:
+        video_path = Path(video_path)
+
+        if not video_path.exists():
+            raise FileNotFoundError(
+                f"Video file not found: {video_path}"
+            )
+
+        video_base64 = base64.b64encode(
+            video_path.read_bytes()
+        ).decode("utf-8")
+
+        content: list[dict[str, Any]] = [
+            {
+                "type": "text",
+                "text": prompt_text,
+            },
+            {
+                "type": "video_url",
+                "video_url": {
+                    "url": (
+                        "data:video/mp4;base64,"
+                        f"{video_base64}"
+                    )
+                },
+            },
+        ]
+
+        response = self.client.chat.completions.create(
+            model=self.model_name,
+            messages=[
+                {
+                    "role": "user",
+                    "content": content,
+                }
+            ],
+            temperature=0,
+            max_tokens=1000,
+            extra_body={
+                "usage": {
+                    "include": True,
+                }
+            },
+        )
+
+        result_text = response.choices[0].message.content
+
+        if not result_text:
+            raise RuntimeError(
+                "OpenRouter returned an empty response."
+            )
+
+        usage_dict: dict[str, Any] = {}
+
+        if response.usage is not None:
+            if hasattr(response.usage, "model_dump"):
+                usage_dict = response.usage.model_dump()
+            else:
+                usage_dict = {
+                    "prompt_tokens": getattr(
+                        response.usage,
+                        "prompt_tokens",
+                        None,
+                    ),
+                    "completion_tokens": getattr(
+                        response.usage,
+                        "completion_tokens",
+                        None,
+                    ),
+                    "total_tokens": getattr(
+                        response.usage,
+                        "total_tokens",
+                        None,
+                    ),
+                }
+
+        return {
+            "text": result_text,
+            "response_id": getattr(
+                response,
+                "id",
+                None,
+            ),
+            "usage": {
+                "input_tokens": usage_dict.get(
+                    "prompt_tokens"
+                ),
+                "output_tokens": usage_dict.get(
+                    "completion_tokens"
+                ),
+                "total_tokens": usage_dict.get(
+                    "total_tokens"
+                ),
+                "cost_usd": usage_dict.get("cost"),
+                "prompt_tokens_details": (
+                    usage_dict.get(
+                        "prompt_tokens_details"
+                    )
+                ),
+                "completion_tokens_details": (
+                    usage_dict.get(
+                        "completion_tokens_details"
+                    )
+                ),
                 "raw_usage": usage_dict,
             },
         }

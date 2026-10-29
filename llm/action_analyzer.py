@@ -71,10 +71,12 @@ class ActionAnalyzer:
         model_name: str,
         prompt_path: str | Path,
         action_guide_path: str | Path | None = None,
+        input_mode: str = "frames",
     ):
         self.provider = provider
         self.model_name = model_name
         self.prompt_path = Path(prompt_path)
+        self.input_mode = input_mode
         self.action_guide_path = (
             Path(action_guide_path) if action_guide_path else None
         )
@@ -89,10 +91,27 @@ class ActionAnalyzer:
 
         inference_start = time.perf_counter()
 
-        adapter_result = self.adapter.analyze_clip_frames(
-            prompt_text=prompt_text,
-            frames=clip_info.sampled_frames,
-        )
+        if self.input_mode == "frames":
+            adapter_result = (
+                self.adapter.analyze_clip_frames(
+                    prompt_text=prompt_text,
+                    frames=clip_info.sampled_frames,
+                )
+            )
+
+        elif self.input_mode == "video":
+            adapter_result = (
+                self.adapter.analyze_clip_video(
+                    prompt_text=prompt_text,
+                    video_path=clip_info.video_path,
+                )
+            )
+
+        else:
+            raise ValueError(
+                f"Unsupported input_mode: "
+                f"{self.input_mode}"
+            )
 
         inference_sec = time.perf_counter() - inference_start
 

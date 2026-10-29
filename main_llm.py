@@ -19,6 +19,7 @@ def build_analyzer(config: AppConfig) -> ActionAnalyzer:
             "action_guide_path",
             None,
         ),
+        input_mode=config.llm.input_mode,
     )
 
 
@@ -38,7 +39,7 @@ def predict_video(
     - main_llm_batch.py can also import and reuse this function.
 
     Timing:
-    - preprocessing_sec: ClipLoader / frame sampling time
+    - preprocessing_sec: metadata loading or frame sampling time
     - inference_sec: measured inside ActionAnalyzer
     - total_processing_sec: preprocessing + inference + local parsing overhead
     """
@@ -63,11 +64,22 @@ def predict_video(
     preprocessing_start = time.perf_counter()
 
     clip_loader = ClipLoader(video_path)
-    clip_info = clip_loader.load(
-        sample_count=config.llm.sample_count,
-        frame_stride=config.llm.frame_stride,
-        jpeg_quality=config.llm.jpeg_quality,
-    )
+
+    if config.llm.input_mode == "frames":
+        clip_info = clip_loader.load(
+            sample_count=config.llm.sample_count,
+            frame_stride=config.llm.frame_stride,
+            jpeg_quality=config.llm.jpeg_quality,
+        )
+    elif config.llm.input_mode == "video":
+        # Native video mode: only read metadata locally.
+        # The original video file is sent directly by VAAdapter.
+        clip_info = clip_loader.load_metadata()
+    else:
+        raise ValueError(
+            f"Unsupported input_mode: {config.llm.input_mode}. "
+            "Use 'frames' or 'video'."
+        )
 
     preprocessing_sec = (
         time.perf_counter() - preprocessing_start

@@ -5,7 +5,7 @@ from pathlib import Path
 @dataclass
 class VideoConfig:
     input_video_path: str = r"combined\test_samples_10"
-    output_dir: str = r"combined\outputs\unified_samples_10_test"
+    output_dir: str = r"combined\outputs\unified_samples_10_v8_2"
     output_video_suffix: str = "_annotated.mp4"
     output_json_suffix: str = ".json"
     save_video: bool = False
@@ -38,8 +38,9 @@ class LLMConfig:
     enabled: bool = True
     provider: str = "openrouter"
     model_name: str = "google/gemini-2.5-flash"
+    input_mode: str = "frames" #frames
 
-    prompt_path: Path = Path("prompts/unified/test.md")
+    prompt_path: Path = Path("prompts/unified/action_analysis_v8.md")
     action_guide_path: Path | None = None   #Path("data/action_detail.xlsx")
 
     sample_count: int | None = None
@@ -50,7 +51,7 @@ class LLMConfig:
     max_tokens: int = 1000
 
     save_json: bool = True
-    output_json_suffix: str = "_llm_test.json"
+    output_json_suffix: str = "_llm_v8.json"
 
 
 @dataclass
